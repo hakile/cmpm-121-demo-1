@@ -23,3 +23,8 @@ app.append(button);
 const countDiv: HTMLDivElement = document.createElement("div");
 countDiv.innerHTML = `${counter} pancakes`;
 app.append(countDiv);
+
+setInterval(() => {
+  counter++;
+  countDiv.innerHTML = `${counter} pancakes`;
+}, 1000);
