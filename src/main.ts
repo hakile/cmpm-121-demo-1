@@ -1,5 +1,14 @@
 import "./style.css";
 
+let lastTime: number = 0;
+
+function step(timeStamp: number) {
+  counter += 0.001 * (timeStamp - lastTime);
+  countDiv.innerHTML = `${counter.toFixed(6)} pancakes`;
+  lastTime = timeStamp;
+  window.requestAnimationFrame(step);
+}
+
 const app: HTMLDivElement = document.querySelector("#app")!;
 
 const gameName = "Harrison's Game";
@@ -16,15 +25,12 @@ const button = document.createElement("button");
 button.innerHTML = "🥞";
 button.addEventListener("click", () => {
   counter++;
-  countDiv.innerHTML = `${counter} pancakes`;
+  countDiv.innerHTML = `${counter.toFixed(6)} pancakes`;
 });
 app.append(button);
 
 const countDiv: HTMLDivElement = document.createElement("div");
-countDiv.innerHTML = `${counter} pancakes`;
+countDiv.innerHTML = `${counter.toFixed(6)} pancakes`;
 app.append(countDiv);
 
-setInterval(() => {
-  counter++;
-  countDiv.innerHTML = `${counter} pancakes`;
-}, 1000);
+window.requestAnimationFrame(step);
