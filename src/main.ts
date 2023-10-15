@@ -4,23 +4,24 @@ let counter: number = 0;
 let countRate: number = 0;
 let lastTime: number = 0;
 let uCounts = [0, 0, 0];
+let uCosts = [10, 100, 1000];
 
 function step(timeStamp: number) {
   counter += countRate * 0.001 * (timeStamp - lastTime);
   countDiv.innerHTML = `${counter.toFixed(4)} pancakes`;
   rateDiv.innerHTML = `${countRate.toFixed(1)} 🥞/s`;
   lastTime = timeStamp;
-  if (counter >= 10) {
+  if (counter >= uCosts[0]) {
     upgrade1.disabled = false;
   } else {
     upgrade1.disabled = true;
   }
-  if (counter >= 100) {
+  if (counter >= uCosts[1]) {
     upgrade2.disabled = false;
   } else {
     upgrade2.disabled = true;
   }
-  if (counter >= 1000) {
+  if (counter >= uCosts[2]) {
     upgrade3.disabled = false;
   } else {
     upgrade3.disabled = true;
@@ -46,34 +47,40 @@ button.addEventListener("click", () => {
 app.append(button);
 
 const upgrade1 = document.createElement("button");
-upgrade1.innerHTML = "+ A (🥞x10)";
+upgrade1.innerHTML = `+ A (🥞x${uCosts[0].toFixed(2)})`;
 upgrade1.disabled = true;
 upgrade1.addEventListener("click", () => {
   countRate += 0.1;
-  counter -= 10;
+  counter -= uCosts[0];
   uCounts[0]++;
+  uCosts[0] *= 1.15;
+  upgrade1.innerHTML = `+ A (🥞x${uCosts[0].toFixed(2)})`;
   u1Count.innerHTML = `${uCounts[0]} A`;
 });
 app.append(upgrade1);
 
 const upgrade2 = document.createElement("button");
-upgrade2.innerHTML = "+ B (🥞x100)";
+upgrade2.innerHTML = `+ B (🥞x${uCosts[1].toFixed(2)})`;
 upgrade2.disabled = true;
 upgrade2.addEventListener("click", () => {
   countRate += 2;
-  counter -= 100;
+  counter -= uCosts[1];
   uCounts[1]++;
+  uCosts[1] *= 1.15;
+  upgrade2.innerHTML = `+ B (🥞x${uCosts[1].toFixed(2)})`;
   u2Count.innerHTML = `${uCounts[1]} B`;
 });
 app.append(upgrade2);
 
 const upgrade3 = document.createElement("button");
-upgrade3.innerHTML = "+ C (🥞x1000)";
+upgrade3.innerHTML = `+ C (🥞x${uCosts[2].toFixed(2)})`;
 upgrade3.disabled = true;
 upgrade3.addEventListener("click", () => {
   countRate += 50;
-  counter -= 1000;
+  counter -= uCosts[2];
   uCounts[2]++;
+  uCosts[2] *= 1.15;
+  upgrade3.innerHTML = `+ C (🥞x${uCosts[2].toFixed(2)})`;
   u3Count.innerHTML = `${uCounts[2]} C`;
 });
 app.append(upgrade3);
@@ -99,4 +106,4 @@ u3Count.innerHTML = `${uCounts[2]} C`;
 app.append(u3Count);
 
 window.requestAnimationFrame(step);
-console.log("Step 6");
+console.log("Step 7");
